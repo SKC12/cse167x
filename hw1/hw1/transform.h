@@ -20,7 +20,6 @@ typedef glm::vec3 vec3;
 typedef glm::vec4 vec4;
 const float pi = 3.14159265; // For portability across platforms
 
-
 class Transform {
 public:
     Transform();
