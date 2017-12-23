@@ -1,23 +1,3 @@
-/**
- * @file     geometry.h
- * @author   Phi Luu
- * @date     December 18, 2017
- *
- * @brief    UC San DiegoX: CSE167x Computer Graphics
- *
- * @section  DESCRIPTION
- *
- * This is a simple demo program written for CSE167 by Ravi Ramamoorthi
- * This program corresponds to the final OpenGL lecture on shading.
- * Modified September 2016 by Hoang Tran to exclusively use modern OpenGL
- *
- * This program draws some simple geometry, a plane with four pillars
- * textures the ground plane, and adds in a teapot that moves
- * Lighting effects are also included with fragment shaders
- * The keyboard function should be clear about the keystrokes
- * The mouse can be used to zoom into and out of the scene
- */
-
 // Moved to a header for the second OpenGL program
 
 #ifndef __INCLUDEGEOMETRY
@@ -32,7 +12,7 @@ const int numobjects = 2;  // ** NEW ** number of objects for buffer
 const int numperobj = 3;
 const int ncolors = 4;
 GLuint VAOs[numobjects + ncolors], teapotVAO;  // A VAO for each object
-GLuint buffers[numperobj * numobjects + ncolors + 1], teapotbuffers[3]; // ** NEW ** List of buffers for geometric data
+GLuint buffers[numperobj * numobjects + ncolors + 1], teapotbuffers[3];  // ** NEW ** List of buffers for geometric data
 GLuint objects[numobjects];  // ** NEW ** For each object
 GLenum PrimType[numobjects];
 GLsizei NumElems[numobjects];
@@ -48,8 +28,8 @@ std::vector<glm::mat4> modelviewStack;
 // ** NEW ** Floor Geometry is specified with a vertex array
 // ** NEW ** Same for other Geometry
 
-enum { Vertices, Colors, Elements }; // For arrays for object
-enum { FLOOR, CUBE };                // For objects, for the floor
+enum { Vertices, Colors, Elements };  // For arrays for object
+enum { FLOOR, CUBE };  // For objects, for the floor
 
 const GLfloat floorverts[4][3] = {
     { 0.5, 0.5, 0.0 }, { -0.5, 0.5, 0.0 }, { -0.5, -0.5, 0.0 },
@@ -76,11 +56,11 @@ const GLfloat cubeverts[8][3] = {
 };
 GLfloat cubecol[12][3];
 const GLubyte cubeinds[12][3] = {
-    { 0, 1, 2 }, { 0, 2, 3 }, // BOTTOM
-    { 4, 5, 6 }, { 4, 6, 7 }, // TOP
-    { 0, 4, 7 }, { 0, 7, 1 }, // LEFT
-    { 0, 3, 5 }, { 0, 5, 4 }, // FRONT
-    { 3, 2, 6 }, { 3, 6, 5 }, // RIGHT
+    { 0, 1, 2 }, { 0, 2, 3 },  // BOTTOM
+    { 4, 5, 6 }, { 4, 6, 7 },  // TOP
+    { 0, 4, 7 }, { 0, 7, 1 },  // LEFT
+    { 0, 3, 5 }, { 0, 5, 4 },  // FRONT
+    { 3, 2, 6 }, { 3, 6, 5 },  // RIGHT
     { 1, 7, 6 }, { 1, 6, 2 }  // BACK
 };
 
@@ -293,7 +273,7 @@ void loadteapot(void) {
         }
     }
 
-    fclose(fp); // Finished parsing
+    fclose(fp);  // Finished parsing
     // Recenter the teapot
     float avgY = (minY + maxY) / 2.0f - 0.02f;
     float avgZ = (minZ + maxZ) / 2.0f;
@@ -310,14 +290,14 @@ void loadteapot(void) {
                  sizeof(glm::vec3) * teapotVertices.size(),
                  &teapotVertices[0],
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0); // This allows usage of layout location 0 in the vertex shader
+    glEnableVertexAttribArray(0);  // This allows usage of layout location 0 in the vertex shader
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
     glBindBuffer(GL_ARRAY_BUFFER, teapotbuffers[1]);
     glBufferData(GL_ARRAY_BUFFER,
                  sizeof(glm::vec3) * teapotNormals.size(),
                  &teapotNormals[0],
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(1); // This allows usage of layout location 1 in the vertex shader
+    glEnableVertexAttribArray(1);  // This allows usage of layout location 1 in the vertex shader
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, teapotbuffers[2]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
@@ -346,9 +326,9 @@ void popMatrix(glm::mat4& mat) {
     if (modelviewStack.size()) {
         mat = glm::mat4(modelviewStack.back());
         modelviewStack.pop_back();
-    } else { // Just to prevent an unwanted error
+    } else {  // Just to prevent an unwanted error
         mat = glm::mat4(1.0f);
     }
 }
 
-#endif // ifndef __INCLUDEGEOMETRY
+#endif  // ifndef __INCLUDEGEOMETRY

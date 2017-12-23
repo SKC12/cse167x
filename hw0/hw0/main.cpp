@@ -1,22 +1,11 @@
-/**
- * @file     main.cpp
- * @author   Phi Luu
- * @date     December 18, 2017
- *
- * @brief    UC San DiegoX: CSE167x Computer Graphics
- *
- * @section  DESCRIPTION
- *
- * This is a simple demo program written for CSE167 by Ravi Ramamoorthi
- * This program corresponds to the final OpenGL lecture on shading.
- * Modified September 2016 by Hoang Tran to exclusively use modern OpenGL
- *
- * This program draws some simple geometry, a plane with four pillars
- * textures the ground plane, and adds in a teapot that moves
- * Lighting effects are also included with fragment shaders
- * The keyboard function should be clear about the keystrokes
- * The mouse can be used to zoom into and out of the scene
- */
+// This is a simple demo program written for CSE167 by Ravi Ramamoorthi
+// This program corresponds to the final OpenGL lecture on shading.
+// Modified September 2016 by Hoang Tran to exclusively use modern OpenGL
+// This program draws some simple geometry, a plane with four pillars
+// textures the ground plane, and adds in a teapot that moves
+// Lighting effects are also included with fragment shaders
+// The keyboard function should be clear about the keystrokes
+// The mouse can be used to zoom into and out of the scene
 
 #include <stdio.h>
 #include <assert.h>
@@ -30,23 +19,23 @@
 #include <FreeImage.h>
 #include <iomanip>
 
-int mouseoldx, mouseoldy;                           // For mouse motion
-int windowWidth = 500, windowHeight = 500;          // Width/Height of OpenGL window
-GLdouble eyeloc = 2.0;                              // Where to look from; initially 0 -2, 2
-GLfloat teapotloc = -0.5;                           // ** NEW ** where the teapot is located
-GLfloat rotamount = 0.0;                            // ** NEW ** amount to rotate teapot by
-GLint animate = 0;                                  // ** NEW ** whether to animate or not
-GLuint vertexshader, fragmentshader, shaderprogram; // shaders
-GLuint projectionPos, modelviewPos, colorPos;       // Locations of uniform variables
-glm::mat4 projection, modelview;                    // The mvp matrices themselves
-glm::mat4 identity(1.0f);                           // An identity matrix used for making transformation matrices
+int mouseoldx, mouseoldy;  // For mouse motion
+int windowWidth = 500, windowHeight = 500;  // Width/Height of OpenGL window
+GLdouble eyeloc = 2.0;  // Where to look from; initially 0 -2, 2
+GLfloat teapotloc = -0.5;  // ** NEW ** where the teapot is located
+GLfloat rotamount = 0.0;  // ** NEW ** amount to rotate teapot by
+GLint animate = 0;  // ** NEW ** whether to animate or not
+GLuint vertexshader, fragmentshader, shaderprogram;  // shaders
+GLuint projectionPos, modelviewPos, colorPos;  // Locations of uniform variables
+glm::mat4 projection, modelview;  // The mvp matrices themselves
+glm::mat4 identity(1.0f);  // An identity matrix used for making transformation matrices
 
-GLubyte woodtexture[256][256][3];                   // ** NEW ** texture (from grsites.com)
-GLuint texNames[1];                                 // ** NEW ** texture buffer
-GLuint istex;                                       // ** NEW ** blend parameter for texturing
-GLuint islight;                                     // ** NEW ** for lighting
-GLint texturing = 1;                                // ** NEW ** to turn on/off texturing
-GLint lighting = 1;                                 // ** NEW ** to turn on/off lighting
+GLubyte woodtexture[256][256][3];  // ** NEW ** texture (from grsites.com)
+GLuint texNames[1];  // ** NEW ** texture buffer
+GLuint istex;  // ** NEW ** blend parameter for texturing
+GLuint islight;  // ** NEW ** for lighting
+GLint texturing = 1;  // ** NEW ** to turn on/off texturing
+GLint lighting = 1;  // ** NEW ** to turn on/off lighting
 
 /* Variables to set uniform params for lighting fragment shader */
 GLuint light0dirn;
@@ -88,15 +77,15 @@ void display(void) {
     // Change from the first program, in that I just made it white.
     // The old OpenGL code of using glBegin... glEnd no longer appears.
     // The new version uses vertex buffer objects from init.
-    glUniform1i(islight, 0); // Turn off lighting (except on teapot, later)
+    glUniform1i(islight, 0);  // Turn off lighting (except on teapot, later)
     glUniform1i(istex, texturing);
 
     // Draw the floor
     // Start with no modifications made to the model matrix
     glUniformMatrix4fv(modelviewPos, 1, GL_FALSE, &(modelview)[0][0]);
-    glUniform3f(colorPos, 1.0f, 1.0f, 1.0f); // The floor is white
-    drawtexture(FLOOR, texNames[0]);         // Texturing floor
-    glUniform1i(istex, 0);                   // Other items aren't textured
+    glUniform3f(colorPos, 1.0f, 1.0f, 1.0f);  // The floor is white
+    drawtexture(FLOOR, texNames[0]);  // Texturing floor
+    glUniform1i(istex, 0);  // Other items aren't textured
 
     // Now draw several cubes with different transforms, colors
     // We now maintain a stack for the modelview matrices. Changes made to the stack after pushing
@@ -147,7 +136,7 @@ void display(void) {
         const GLfloat zero[] = { 0.0, 0.0, 0.0, 1.0 };
         const GLfloat light_specular[] = { 1, 1, 0, 1 };
         const GLfloat light_specular1[] = { 0, 0.5, 1, 1 };
-        const GLfloat light_direction[] = { 0.5, 0, 0, 0 }; // Dir light 0 in w
+        const GLfloat light_direction[] = { 0.5, 0, 0, 0 };  // Dir light 0 in w
         const GLfloat light_position1[] = { 0, -0.5, 0, 1 };
 
         GLfloat light0[4], light1[4];
@@ -175,7 +164,7 @@ void display(void) {
         // In the old OpenGL code, GLUT defines normals for us. The glut teapot can't
         // be drawn in modern OpenGL, so we need to load a 3D model for it. The normals
         // are defined in the 3D model file.
-        glUniform1i(islight, lighting); // turn on lighting only for teapot.
+        glUniform1i(islight, lighting);  // turn on lighting only for teapot.
     }
     // ** NEW ** Put a teapot in the middle that animates
     glUniform3f(colorPos, 0.0f, 1.0f, 1.0f);
@@ -193,7 +182,7 @@ void display(void) {
     modelview = modelview * glm::rotate(identity,
                                         glm::pi<float>() / 2.0f,
                                         glm::vec3(1.0, 0.0, 0.0));
-    float size = 0.235f; // Teapot size
+    float size = 0.235f;  // Teapot size
     modelview = modelview * glm::scale(identity, glm::vec3(size, size, size));
     glUniformMatrix4fv(modelviewPos, 1, GL_FALSE, &(modelview)[0][0]);
     drawteapot();
@@ -237,9 +226,9 @@ void mouse(int button, int state, int x, int y) {
         if (state == GLUT_UP) {
             // Do Nothing ;
         } else if (state == GLUT_DOWN) {
-            mouseoldx = x; mouseoldy = y;                               // so we can move wrt x , y
+            mouseoldx = x; mouseoldy = y;  // so we can move wrt x , y
         }
-    } else if ((button == GLUT_RIGHT_BUTTON) && (state == GLUT_DOWN)) { // Reset gluLookAt
+    } else if ((button == GLUT_RIGHT_BUTTON) && (state == GLUT_DOWN)) {  // Reset gluLookAt
         eyeloc = 2.0;
         modelview = glm::lookAt(glm::vec3(0, -eyeloc, eyeloc),
                                 glm::vec3(0, 0, 0),
@@ -251,9 +240,9 @@ void mouse(int button, int state, int x, int y) {
 }
 
 void mousedrag(int x, int y) {
-    int yloc = y - mouseoldy; // We will use the y coord to zoom in/out
+    int yloc = y - mouseoldy;  // We will use the y coord to zoom in/out
 
-    eyeloc += 0.005 * yloc;   // Where do we look from
+    eyeloc += 0.005 * yloc;  // Where do we look from
     if (eyeloc < 0) eyeloc = 0.0;
     mouseoldy = y;
 
@@ -328,16 +317,16 @@ void keyboard(unsigned char key, int x, int y) {
     case 27:  // Escape to quit
         exit(0);
         break;
-    case 'p': // ** NEW ** to pause/restart animation
+    case 'p':  // ** NEW ** to pause/restart animation
         animate = !animate;
         if (animate) glutIdleFunc(animation);
         else glutIdleFunc(NULL);
         break;
-    case 't': // ** NEW ** to turn on/off texturing ;
+    case 't':  // ** NEW ** to turn on/off texturing ;
         texturing = !texturing;
         glutPostRedisplay();
         break;
-    case 's': // ** NEW ** to turn on/off shading (always smooth) ;
+    case 's':  // ** NEW ** to turn on/off shading (always smooth) ;
         lighting = !lighting;
         glutPostRedisplay();
         break;
@@ -416,7 +405,7 @@ void init(void) {
     glClearColor(0.0, 0.0, 0.0, 0.0);
 
     /* initialize viewing values  */
-    projection = glm::mat4(1.0f); // The identity matrix
+    projection = glm::mat4(1.0f);  // The identity matrix
     modelview = glm::lookAt(glm::vec3(0, -eyeloc, eyeloc),
                             glm::vec3(0, 0, 0),
                             glm::vec3(0, 1, 1));
@@ -450,7 +439,7 @@ void init(void) {
     // Now create the buffer objects to be used in the scene later
     glGenVertexArrays(numobjects + ncolors, VAOs);
     glGenVertexArrays(1, &teapotVAO);
-    glGenBuffers(numperobj * numobjects + ncolors + 1, buffers); // 1 extra buffer for the texcoords
+    glGenBuffers(numperobj * numobjects + ncolors + 1, buffers);  // 1 extra buffer for the texcoords
     glGenBuffers(3, teapotbuffers);
 
     // Initialize texture
@@ -475,7 +464,7 @@ void init(void) {
 
     // Enable the depth test
     glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS); // The default option
+    glDepthFunc(GL_LESS);  // The default option
 }
 
 int main(int argc, char** argv) {
@@ -497,7 +486,7 @@ int main(int argc, char** argv) {
         std::cerr << "Error: " << glewGetString(err) << std::endl;
     }
 
-    init(); // Always initialize first
+    init();  // Always initialize first
 
     // Now, we define callbacks and functions for various tasks.
     glutDisplayFunc(display);
@@ -506,7 +495,7 @@ int main(int argc, char** argv) {
     glutMouseFunc(mouse);
     glutMotionFunc(mousedrag);
 
-    glutMainLoop(); // Start the main code
+    glutMainLoop();  // Start the main code
     FreeImage_DeInitialise();
-    return 0;       /* ANSI C requires main to return int. */
+    return 0;  /* ANSI C requires main to return int. */
 }
