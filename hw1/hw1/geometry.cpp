@@ -83,7 +83,7 @@ void parse(const char* filepath) {
         }
     }
 
-    fclose(fp); // Finished parsing
+    fclose(fp);  // Finished parsing
     // Recenter the teapot
     float avgY = (minY + maxY) / 2.0f - 0.0234f;
     float avgZ = (minZ + maxZ) / 2.0f;
@@ -104,7 +104,7 @@ void bindTeapot() {
                  sizeof(glm::vec3) * teapotVertices.size(),
                  &teapotVertices[0],
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0); // This allows usage of layout location 0 in the vertex shader
+    glEnableVertexAttribArray(0);  // This allows usage of layout location 0 in the vertex shader
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
     // Use layout location 1 for the normals
     glBindBuffer(GL_ARRAY_BUFFER, defaultNBO);
@@ -112,7 +112,7 @@ void bindTeapot() {
                  sizeof(glm::vec3) * teapotNormals.size(),
                  &teapotNormals[0],
                  GL_STATIC_DRAW);
-    glEnableVertexAttribArray(1); // This allows usage of layout location 1 in the vertex shader
+    glEnableVertexAttribArray(1);  // This allows usage of layout location 1 in the vertex shader
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, defaultEBO);
@@ -137,5 +137,5 @@ void solidTeapot(float size) {
 
     glBindVertexArray(defaultVAO);
     glDrawElements(GL_TRIANGLES, teapotIndices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0); // Unbind the VAO when done
+    glBindVertexArray(0);  // Unbind the VAO when done
 }

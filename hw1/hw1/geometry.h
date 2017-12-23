@@ -15,7 +15,7 @@
 #include <GL/glut.h>
 #ifndef GLM_FORCE_RADIANS
 # define GLM_FORCE_RADIANS
-#endif // ifndef GLM_FORCE_RADIANS
+#endif  // ifndef GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -35,7 +35,7 @@ extern GLuint modelviewPos;
 extern glm::mat4 model, view;
 
 // Other variables
-enum shape { NONE, TEAPOT, CUBE, SPHERE }; // Just in case future assignments utilize more shapes
+enum shape { NONE, TEAPOT, CUBE, SPHERE };  // Just in case future assignments utilize more shapes
 extern shape lastUsed;
 
 void initBufferObjects();
@@ -58,4 +58,4 @@ void parse(const char*);
 void bindTeapot();
 void solidTeapot(float);
 
-#endif // ifndef _GLUT_SHAPES_REPLACEMENT
+#endif  // ifndef _GLUT_SHAPES_REPLACEMENT

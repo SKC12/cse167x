@@ -10,4 +10,4 @@ void shadererrors(const GLint shader);
 GLuint initshaders(GLenum type, const char* filename);
 GLuint initprogram(GLuint vertexshader, GLuint fragmentshader);
 
-#endif // ifndef __INCLUDESHADERS
+#endif  // ifndef __INCLUDESHADERS

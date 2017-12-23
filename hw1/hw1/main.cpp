@@ -19,29 +19,29 @@
 #include <FreeImage.h>
 #include "UCSD/grader.h"
 
-int amount;                        // The amount of rotation for each arrow press
+int amount;  // The amount of rotation for each arrow press
 
-vec3 eye;                          // The (regularly updated) vector coordinates of the eye location
-vec3 up;                           // The (regularly updated) vector coordinates of the up location
-const vec3 eyeinit(0.0, 0.0, 7.0); // Initial eye position, also for resets
+vec3 eye;  // The (regularly updated) vector coordinates of the eye location
+vec3 up;  // The (regularly updated) vector coordinates of the up location
+const vec3 eyeinit(0.0, 0.0, 7.0);  // Initial eye position, also for resets
 const vec3 upinit(0.0, 1.0, 0.0);  // Initial up position, also for resets
-const int amountinit = 5;          // Initial step amount for camera movement, also for resets
+const int amountinit = 5;  // Initial step amount for camera movement, also for resets
 
-bool useGlu;                       // Toggle use of "official" opengl/glm transform vs user code
-int w = 500, h = 500;              // width and height
+bool useGlu;  // Toggle use of "official" opengl/glm transform vs user code
+int w = 500, h = 500;  // width and height
 
 Grader grader;
 bool allowGrader = false;
 
 // Constants to set up lighting on the teapot
-const vec4 light_position(0, 5, 10, 1);     // Position of light 0
-const vec4 light_position1(0, 5, -10, 1);   // Position of light 1
+const vec4 light_position(0, 5, 10, 1);  // Position of light 0
+const vec4 light_position1(0, 5, -10, 1);  // Position of light 1
 const vec4 light_specular(0.6, 0.3, 0, 1);  // Specular of light 0
-const vec4 light_specular1(0, 0.3, 0.6, 1); // Specular of light 1
-const vec4 one(1, 1, 1, 1);                 // Specular on teapot
-const vec4 medium(0.5, 0.5, 0.5, 1);        // Diffuse on teapot
-const vec4 small(0.2, 0.2, 0.2, 1);         // Ambient on teapot
-const GLfloat high = 100;                   // Shininess of teapot
+const vec4 light_specular1(0, 0.3, 0.6, 1);  // Specular of light 1
+const vec4 one(1, 1, 1, 1);  // Specular on teapot
+const vec4 medium(0.5, 0.5, 0.5, 1);  // Diffuse on teapot
+const vec4 small(0.2, 0.2, 0.2, 1);  // Ambient on teapot
+const GLfloat high = 100;  // Shininess of teapot
 vec4 light0, light1;
 
 // Variables to set uniform params for lighting fragment shader
@@ -112,7 +112,7 @@ void printHelp() {
               << "occurs with each arrow press.\n"
               << "press 'i' to run image grader test cases\n"
               <<
-    "press 'g' to switch between using glm::lookAt or your own LookAt.\n"
+        "press 'g' to switch between using glm::lookAt or your own LookAt.\n"
               << "press 'r' to reset the transformation (eye and up).\n"
               << "press ESC to quit.\n";
 }
@@ -150,7 +150,7 @@ void keyboard(unsigned char key, int x, int y) {
     case 27:  // Escape to quit
         exit(0);
         break;
-    case 'r': // reset eye and up vectors
+    case 'r':  // reset eye and up vectors
         eye = eyeinit;
         up = upinit;
         amount = amountinit;
@@ -166,16 +166,16 @@ void keyboard(unsigned char key, int x, int y) {
 
 void specialKey(int key, int x, int y) {
     switch (key) {
-    case 100: // left
+    case 100:  // left
         Transform::left(amount, eye, up);
         break;
-    case 101: // up
+    case 101:  // up
         Transform::up(amount, eye, up);
         break;
-    case 102: // right
+    case 102:  // right
         Transform::left(-amount, eye, up);
         break;
-    case 103: // down
+    case 103:  // down
         Transform::up(-amount, eye, up);
         break;
     }
