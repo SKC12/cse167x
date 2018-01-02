@@ -77,7 +77,7 @@ void readfile(const char* filename)
         // I need to implement a matrix stack to store transforms.  
         // This is done using standard STL Templates 
         stack <mat4> transfstack; 
-        transfstack.push(mat4(1.0));  // identity
+        transfstack.push(mat4(1.0f));  // identity
 
         getline (in, str); 
         while (in) {
@@ -99,11 +99,14 @@ void readfile(const char* filename)
                     } else {
                         validinput = readvals(s, 8, values); // Position/color for lts.
                         if (validinput) {
-
                             // YOUR CODE FOR HW 2 HERE. 
                             // Note that values[0...7] shows the read in values 
                             // Make use of lightposn[] and lightcolor[] arrays in variables.h
                             // Those arrays can then be used in display too.  
+                            for (i = 0; i < 4; i++) {
+                                lightposn[numused * 4 + i] = values[i];
+                                lightcolor[numused * 4 + i] = values[i + 4];
+                            }
 
                             ++numused; 
                         }
@@ -157,13 +160,15 @@ void readfile(const char* filename)
                 } else if (cmd == "camera") {
                     validinput = readvals(s,10,values); // 10 values eye cen up fov
                     if (validinput) {
-
                         // YOUR CODE FOR HW 2 HERE
                         // Use all of values[0...9]
                         // You may need to use the upvector fn in Transform.cpp
                         // to set up correctly. 
                         // Set eyeinit upinit center fovy in variables.h 
-
+                        eyeinit = vec3(values[0], values[1], values[2]);
+                        center = vec3(values[3], values[4], values[5]);
+                        upinit = Transform::upvector(vec3(values[6], values[7], values[8]), eyeinit);
+                        fovy = values[9];
                     }
                 }
 
@@ -207,36 +212,34 @@ void readfile(const char* filename)
                 else if (cmd == "translate") {
                     validinput = readvals(s,3,values); 
                     if (validinput) {
-
                         // YOUR CODE FOR HW 2 HERE.  
                         // Think about how the transformation stack is affected
                         // You might want to use helper functions on top of file. 
                         // Also keep in mind what order your matrix is!
-
+                        rightmultiply(Transform::translate(values[0], values[1], values[2]), transfstack);
                     }
                 }
                 else if (cmd == "scale") {
                     validinput = readvals(s,3,values); 
                     if (validinput) {
-
                         // YOUR CODE FOR HW 2 HERE.  
                         // Think about how the transformation stack is affected
                         // You might want to use helper functions on top of file.  
                         // Also keep in mind what order your matrix is!
-
+                        rightmultiply(Transform::scale(values[0], values[1], values[2]), transfstack);
                     }
                 }
                 else if (cmd == "rotate") {
                     validinput = readvals(s,4,values); 
                     if (validinput) {
-
                         // YOUR CODE FOR HW 2 HERE. 
                         // values[0..2] are the axis, values[3] is the angle.  
                         // You may want to normalize the axis (or in Transform::rotate)
                         // See how the stack is affected, as above.  
                         // Note that rotate returns a mat3. 
                         // Also keep in mind what order your matrix is!
-
+                        mat4 rotMat = mat4(Transform::rotate(values[3], vec3(values[0], values[1], values[2])));
+                        rightmultiply(rotMat, transfstack);
                     }
                 }
 
