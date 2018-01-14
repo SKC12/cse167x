@@ -100,6 +100,15 @@ void readfile(const char* filename) {
                 int numverts = 0;
                 bool validinput; // Validity of input
 
+                // default ambient is 0.2, 0.2, 0.2, 1
+                ambient[0] = 0.2f;
+                ambient[1] = 0.2f;
+                ambient[2] = 0.2f;
+                ambient[3] = 1.0f;
+
+                // default attenuation is 1, 0, 0
+                attenuation = vec3(1.0f, 0, 0);
+
                 // Process the light, add it to database.
                 // Lighting Command
                 if (cmd == "directional" || cmd == "point") {
@@ -122,6 +131,11 @@ void readfile(const char* filename) {
                             ++numused;
                         }
                     }
+                }
+
+                if (cmd == "attenuation") {
+                    validinput = readvals(s, 3, values);
+                    if (validinput) attenuation = vec3(values[0], values[1], values[2]);
                 }
 
                 // Material Commands

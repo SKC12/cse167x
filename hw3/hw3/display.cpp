@@ -122,13 +122,9 @@ void display() {
         // Actually draw the object
         // We provide the actual drawing functions for you.  
         // Remember that obj->type is notation for accessing struct fields
-        if (obj->type == cube) {
-            solidCube(obj->size);
-        } else if (obj->type == sphere) {
+        if (obj->type == sphere) {
             const int tessel = 20;
-            solidSphere(obj->size, tessel, tessel);
-        } else if (obj->type == teapot) {
-            solidTeapot(obj->size);
+            solidSphere(obj->radius, tessel, tessel);
         }
 
     }
